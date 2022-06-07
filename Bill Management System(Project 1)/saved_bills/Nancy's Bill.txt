@@ -1,0 +1,5 @@
+Bill breakdown
+Maggi:                    ...$12
+Coke:                     ...$10
+tip:                      ...$5
+total:                    ...$27.00

@@ -1,0 +1,5 @@
+Bill breakdown
+Coffee:                   ...$10
+Biscuit:                  ...$5
+tip:                      ...$2
+total:                    ...$17.00
