@@ -7,3 +7,6 @@ ii) Add tip for the waiter
 iii) Save the bill(which saves the bill for the user in a file format)
 
 ![image](https://user-images.githubusercontent.com/68556660/172454775-8d54f3a0-e8cf-4294-83df-fc5845435722.png)
+
+The Saved bill is shown here
+![image](https://user-images.githubusercontent.com/68556660/172455320-70c89e1e-e42d-4e40-b489-ef86d5b0e7bb.png)
