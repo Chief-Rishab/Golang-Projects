@@ -23,6 +23,25 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Fprintf(w, "hello!")
 }
+/*
+Go's ServeMux does not have any special way to specify the allowed methods for a route,
+so you have to check the request method yourself in the HTTP handler.
+
+Let's make sure that the indexHandler function returns an error if a non-GET request is made to the root route.
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+    if r.URL.Path != "/" {
+        http.NotFound(w, r)
+        return
+    }
+
+    if r.Method == "GET" {
+        w.Write([]byte("<h1>Welcome to my web server!</h1>"))
+    } else {
+        http.Error(w, "Only GET requests are allowed!", http.StatusMethodNotAllowed)
+    }
+}
+*/
 
 /*
 The http.ResponseWriter interface has a Write method which accepts a byte slice and writes the data to the connection as part of an HTTP response. 
