@@ -43,6 +43,23 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	/*
+	Serving static assets
+	To serve static files from a web server, the http.FileServer() method can be utilized.
+
+	func main() {
+    	staticHandler := http.FileServer(http.Dir("./assets"))
+    	mux.Handle("/assets/", http.StripPrefix("/assets/", staticHandler))
+	}
+	
+	The FileServer() function returns an http.Handler that responds to all HTTP requests with the contents of the provided filesystem.
+	In the above example, the filesystem is given as the assets directory relative to the application.
+	
+	For other details go through- 
+	http.Redirect, http.NotFound, 
+	https://www.honeybadger.io/blog/go-web-services/
+	
+	*/
 	fileServer := http.FileServer(http.Dir("./")) //FileServer returns a handler that serves HTTP requests
 	//with the contents of the file system rooted at root.
 	http.Handle("/", fileServer)
