@@ -6,6 +6,11 @@ import (
 	"net/http"
 )
 
+//The first argument to the helloHandler function is a value of the type http.ResponseWriter. 
+//This is the mechanism used for sending responses to any connected HTTP clients.
+//It's also how response headers are set. The second argument is a pointer to an http.Request. 
+//It's how data is retrieved from the web request. For example, the details from a form submission can be accessed through the request pointer.
+
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/hello" {
 		http.Error(w, "404 not found", http.StatusNotFound)
@@ -18,6 +23,13 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Fprintf(w, "hello!")
 }
+
+/*
+The http.ResponseWriter interface has a Write method which accepts a byte slice and writes the data to the connection as part of an HTTP response. 
+Converting a string to a byte slice is as easy as using []byte(str), and that's how we're able to respond to HTTP requests.
+
+example usage::: w.Write([]byte("<h1>Welcome to my web server!</h1>"))
+*/
 
 func formHandler(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
@@ -42,3 +54,7 @@ func main() {
 		log.Fatal(err)
 	}
 }
+/*
+ListenAndServe starts an HTTP server with a given address and handler. 
+The handler is usually nil, which means to use DefaultServeMux. Handle and HandleFunc add handlers to DefaultServeMux:
+*/
