@@ -1,0 +1,10 @@
+// Latitude Longitude (example: -33.865382, 151.192861). With fields:
+// Latitude (number)
+// Longitude (number)
+
+syntax ="proto3";
+
+message Latitude_Longitude{
+    int32 latitude=1;
+    int32 longitude=2;
+}
