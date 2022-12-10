@@ -7,34 +7,46 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/Chief-Rishab/mymodule/model"
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-const connectionString = "mongodb+srv://ReadNoteUser:cloudisgood@cluster0.ts0qky5.mongodb.net/?retryWrites=true&w=majority" // to denote where the database is located
-const dbName = "medium"
-const collectionName = "readlist"
 
 var collection *mongo.Collection
 
 // connection with the database
 
-func init() {
-	clientOption := options.Client().ApplyURI(connectionString)
+func loadTheEnv() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatal("Error loading the .env file")
+	}
+}
 
+func createDBInstance() {
+	connectionString := os.Getenv("DB_URI")
+	dbName := os.Getenv("DB_NAME")
+	collectionName := os.Getenv("DB_COLLECTION_NAME")
+
+	clientOption := options.Client().ApplyURI(connectionString)
 	dbclient, err := mongo.Connect(context.Background(), clientOption) // connection request
 
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Connected to MongoDB Cluster...")
-
 	collection = (*mongo.Collection)(dbclient.Database(dbName).Collection(collectionName)) // Collection reference is listening
+}
+
+func init() {
+	loadTheEnv()
+	createDBInstance()
 }
 
 func createArticle(article model.Article) {
