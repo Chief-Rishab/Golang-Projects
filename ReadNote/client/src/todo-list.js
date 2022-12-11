@@ -1,5 +1,5 @@
 import React,{Component} from "react";
-import axios, { formToJSON } from 'axios'
+import axios from 'axios'
 import {Card, Header, Form, Input, Icon, Button, CardContent, CardHeader} from "semantic-ui-react";
 
 let endpoint ="http://localhost:8000";
@@ -25,9 +25,7 @@ class ToDoList extends Component{
     };
 
     onSubmit = () =>{
-        console.log("create task called");
         let {task} = this.state;
-        console.log(task);
         if (task){
             axios.post(endpoint+ "/api/article",
             {
@@ -44,19 +42,18 @@ class ToDoList extends Component{
         this.setState({
             task:"",
         });
-        console.log(res);
+        //console.log(res);
     });
     }
     };
 
     getTask = ()=>{
-        console.log("Get task called");
         axios.get(endpoint+"/api/articles").then((res)=>{
-            console.log(res);
+            //console.log(res);
             if(res.data){
                 this.setState({
                     items: res.data.map((item)=>{
-                        console.log(res);
+                    //    console.log(res);
                         let color = "yellow";
                         let style={
                             wordWrap:"break-word",
@@ -65,11 +62,12 @@ class ToDoList extends Component{
                     if(item.read){
                         color="green";
                         style["textDecorationLine"]="underline";
+                        style["textDecorationColor"]="blue";
                     }    
                     
                     return(
 
-                        <Card key={item._id} color={color} fluid className="rough">
+                        <Card key={item._id} color={color} fluid className="rough" style={{ width: '25rem', borderBottom: 'solid', backgroundColor:{color} }} >
                             <CardContent>
                                 <CardHeader textAlign="left">
                                     <div style={style}>{item.title}</div>
@@ -86,15 +84,15 @@ class ToDoList extends Component{
                                 <Icon
                                      name="check circle"
                                      color="green"
-                                     onClick={() => this.updateTask(item._id)}
+                                     onClick={() => this.updateRead(item._id)}
                                  />
-                                <span style={{ paddingRight: 10 }}>Done</span>
+                                <span style={{ paddingRight: 10 }}>Mark as Read</span>
                                     <Icon 
                                     name="undo"
-                                    color="blue"
+                                    color="yellow"
                                     onClick={()=> this.updateUnread(item._id)}
                                     />
-                                    <span style={{paddingRight:10}}> Undo</span>
+                                    <span style={{paddingRight:10}}> UnRead</span>
                                     <Icon 
                                     name="delete"
                                     color="red"
@@ -117,50 +115,46 @@ class ToDoList extends Component{
         });
     };
 
-    updateTask = (id) =>{
-        console.log("update task called");
+    updateRead = (id) =>{
         axios.put(endpoint+"/api/article/"+id,{
             headers:{
                 "Content-Type":"application/json",
             },
         }).then((res)=>{
-            console.log(res);
+           // console.log(res);
             this.getTask();
         });
     };
 
     updateUnread = (id) =>{
-        console.log("update task as unread called");
         axios.put(endpoint+"/api/articleUnread/"+id,{
             headers:{
                 "Content-Type":"application/json",
             },
         }).then((res)=>{
-            console.log(res);
+           // console.log(res);
             this.getTask();
         });
     }
 
     deleteTask = (id) =>{
-        console.log("delete task called");
         axios.delete(endpoint+"/api/delArticle/"+id,{
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded",
             },
         }).then((res)=>{
-            console.log(res);
+          //  console.log(res);
             this.getTask();
         });
     };
 
     deleteAllTask = () =>{
-        console.log("delete all task called");
         axios.delete(endpoint+"/api/deletearticles",{
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded",
             },
         }).then((res)=>{
-            console.log(res);
+         //   console.log(res);
             this.getTask();
         });
     };
